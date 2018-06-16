@@ -1,0 +1,26 @@
+{
+  "name": "worldcup-live",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@fortawesome/fontawesome": "1.1.8",
+    "@fortawesome/fontawesome-free-brands": "5.0.13",
+    "@fortawesome/fontawesome-free-regular": "5.0.13",
+    "@fortawesome/fontawesome-free-solid": "5.0.13",
+    "bulma": "0.7.1",
+    "font-awesome": "4.7.0",
+    "node-sass": "4.9.0",
+    "prop-types": "15.6.1",
+    "react": "16.4.1",
+    "react-dom": "16.4.1",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "npm run sass:build && react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "sass:watch": "node-sass -w src/styles/scss -o src/styles/css",
+    "sass:build": "node-sass src/styles/scss -o src/styles/css --source-map true"
+  }
+}
