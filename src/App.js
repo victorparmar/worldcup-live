@@ -5,6 +5,8 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import InPlay from "./components/InPlay";
 
+import NotificationService from "./services/NotificationService";
+
 const NextMatch = props => {
   return (
     <div>
@@ -39,6 +41,7 @@ class App extends Component {
     }
 
     this.setState(newState);
+    NotificationService.notify("woah!");
   };
 
   render() {
@@ -47,7 +50,7 @@ class App extends Component {
         <section
           className={
             "hero is-fullheight " +
-            (this.state.inPlayTeams.length ? "is-info" : "is-success")
+            (this.state.inPlayTeams.length ? "is-success" : "is-info")
           }
         >
           <div className="hero-head">
@@ -56,24 +59,17 @@ class App extends Component {
 
           <div className="hero-body">
             <div className="container wc-dashboard has-text-centered">
+
               <div className="columns">
                 <div className="column">
-                <a className="button" onClick={this.handleInPlayToggleClick}>
-                  <span>Toggle InPlay</span>
-                </a>
+                  <a className="button" onClick={this.handleInPlayToggleClick}>
+                    <span>Toggle InPlay</span>
+                  </a>
                 </div>
               </div>
 
               {this.renderInPlay()}
-
-              <div className="columns">
-                <div className="column">
-                  <div className="next-match">
-                    Next up <br />
-                    <NextMatch home="Spain" away="Russia" time="time" />
-                  </div>
-                </div>
-              </div>
+              {this.renderNextUp()}
             </div>
           </div>
 
@@ -90,7 +86,7 @@ class App extends Component {
       return;
     }
 
-    return this.state.inPlayTeams.map((team) => {
+    return this.state.inPlayTeams.map(team => {
       const key = team.home + "-" + team.away;
       return (
         <InPlay
@@ -102,6 +98,19 @@ class App extends Component {
         />
       );
     });
+  }
+
+  renderNextUp() {
+    return (
+      <div className="columns next-up">
+        <div className="column">
+          <div className="next-match">
+            Next up <br />
+            <NextMatch home="Spain" away="Russia" time="time" />
+          </div>
+        </div>
+      </div>
+    );
   }
 }
 

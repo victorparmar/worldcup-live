@@ -40,11 +40,11 @@ class Navbar extends React.Component {
             }
           >
             <div className="navbar-end">
-              <a className="navbar-item is-active">Home</a>
-              <a className="navbar-item">Examples</a>
-              <a className="navbar-item">Documentation</a>
               <span className="navbar-item">
-                <a className="button is-info is-inverted">
+                <a
+                  className="button is-info is-inverted"
+                  href="https://github.com/victorparmar/worldcup-live"
+                >
                   <span className="icon">
                     <i className="fab fa-github" />
                   </span>

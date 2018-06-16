@@ -9,6 +9,7 @@
     "@fortawesome/fontawesome-free-solid": "5.0.13",
     "bulma": "0.7.1",
     "font-awesome": "4.7.0",
+    "isomorphic-fetch": "2.2.1",
     "node-sass": "4.9.0",
     "prop-types": "15.6.1",
     "react": "16.4.1",

@@ -8,6 +8,10 @@
   font-weight: bold;
 }
 
+.wc-dashboard .next-up {
+  margin-top: 1rem;
+}
+
 .wc-dashboard .next-match {
   font-size: 1.25rem;
 }
