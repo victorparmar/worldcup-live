@@ -2,7 +2,8 @@ import React from "react";
 
 class Navbar extends React.Component {
   state = {
-    isNavbarActive: false
+    isNavbarActive: false,
+    isRefreshingData: false
   };
 
   handleNavbarMenuClick = e => {
@@ -11,6 +12,44 @@ class Navbar extends React.Component {
       isNavbarActive: !this.state.isNavbarActive
     });
   };
+
+  handleToggleInPlayClick = e => {
+    e.preventDefault();
+    this.props.toggleInPlay();
+  };
+
+  handleRefreshDataClick = e => {
+    e.preventDefault();
+    this.refreshData();
+  };
+
+  refreshData = () => {
+    console.log("refreshing");
+
+    this.setState({
+      isRefreshingData: true
+    });
+
+    setTimeout(() => {
+      console.log("done");
+      this.setState({
+        isRefreshingData: false
+      });
+    }, 1000);
+  };
+
+  componentDidMount() {
+    this.refreshData();
+    this.intervalId = setInterval(() => {
+      this.refreshData();
+    }, 60000);
+  }
+
+  componentWillUnmount() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
 
   render() {
     return (
@@ -42,7 +81,26 @@ class Navbar extends React.Component {
             <div className="navbar-end">
               <span className="navbar-item">
                 <a
-                  className="button is-info is-inverted"
+                  className="button is-inverted"
+                  onClick={this.handleToggleInPlayClick}
+                >
+                  <span>Toggle InPlay</span>
+                </a>
+              </span>
+              <span className="navbar-item">
+                <a
+                  className={
+                    "button is-inverted " +
+                    (this.state.isRefreshingData ? "is-loading" : "")
+                  }
+                  onClick={this.handleRefreshDataClick}
+                >
+                  <span>Refresh Data</span>
+                </a>
+              </span>
+              <span className="navbar-item">
+                <a
+                  className="button is-inverted"
                   href="https://github.com/victorparmar/worldcup-live"
                 >
                   <span className="icon">
@@ -57,6 +115,7 @@ class Navbar extends React.Component {
       </nav>
     );
   }
+
 }
 
 export default Navbar;

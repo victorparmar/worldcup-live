@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 
-import packageJson from './package.json.lnk';
+import packageJson from "./package.json.lnk";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -24,6 +24,14 @@ const inPlayTeams = [
     away: "Croatia",
     awayScore: "2"
   }
+  /*
+  {
+    home: "Spain",
+    homeScore: "2",
+    away: "Germany",
+    awayScore: "3"
+  },
+  */
 ];
 
 class App extends Component {
@@ -31,9 +39,8 @@ class App extends Component {
     inPlayTeams: inPlayTeams
   };
 
-  handleInPlayToggleClick = e => {
-    e.preventDefault();
-
+  // for testing purposes
+  toggleInPlay = () => {
     const newState = { ...this.state };
 
     if (this.state.inPlayTeams.length) {
@@ -48,7 +55,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div ref={elem => (this.appElem = elem)}>
         <section
           className={
             "hero is-fullheight " +
@@ -56,20 +63,11 @@ class App extends Component {
           }
         >
           <div className="hero-head">
-            <Navbar />
+            <Navbar toggleInPlay={this.toggleInPlay} />
           </div>
 
           <div className="hero-body">
             <div className="container wc-dashboard has-text-centered">
-
-              <div className="columns">
-                <div className="column">
-                  <a className="button" onClick={this.handleInPlayToggleClick}>
-                    <span>Toggle InPlay</span>
-                  </a>
-                </div>
-              </div>
-
               {this.renderInPlay()}
               {this.renderNextUp()}
             </div>
@@ -91,13 +89,15 @@ class App extends Component {
     return this.state.inPlayTeams.map(team => {
       const key = team.home + "-" + team.away;
       return (
-        <InPlay
-          key={key}
-          home={team.home}
-          homeScore={team.homeScore}
-          away={team.away}
-          awayScore={team.awayScore}
-        />
+        <div key={key}>
+          <InPlay
+            home={team.home}
+            homeScore={team.homeScore}
+            away={team.away}
+            awayScore={team.awayScore}
+          />
+          <hr />
+        </div>
       );
     });
   }
