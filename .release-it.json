@@ -1,0 +1,23 @@
+{
+  "verbose": true,
+  "pkgFiles": ["package.json", "package-lock.json"],
+  "requireCleanWorkingDir": true,
+  "src": {
+    "beforeStartCommand": "CI=true npm test",
+    "afterReleaseCommand": "npm run deploy"
+  },
+  "npm": {
+    "publish": false
+  },
+  "github": {
+    "release": false
+  },
+  "prompt": {
+    "src": {
+      "status": true,
+      "tag": true,
+      "release": false,
+      "publish": false
+    }
+  }
+}

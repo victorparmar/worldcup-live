@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./App.css";
 
+import packageJson from './package.json.lnk';
+
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import InPlay from "./components/InPlay";
@@ -74,7 +76,7 @@ class App extends Component {
           </div>
 
           <div className="hero-foot">
-            <Footer />
+            <Footer version={packageJson.version} />
           </div>
         </section>
       </div>
