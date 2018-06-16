@@ -1,0 +1,13 @@
+
+.wc-dashboard .country {
+  font-size: 6vw;
+}
+
+.wc-dashboard .score {
+  font-size: 12vw;
+  font-weight: bold;
+}
+
+.wc-dashboard .next-match {
+  font-size: 1.25rem;
+}

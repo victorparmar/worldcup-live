@@ -1,85 +1,107 @@
 import React, { Component } from "react";
 import "./App.css";
 
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import InPlay from "./components/InPlay";
+
+const NextMatch = props => {
+  return (
+    <div>
+      <b>{props.home}</b> vs <b>{props.away}</b> ({props.time})
+    </div>
+  );
+};
+
+const inPlayTeams = [
+  {
+    home: "Nigeria",
+    homeScore: "0",
+    away: "Croatia",
+    awayScore: "2"
+  }
+];
+
 class App extends Component {
+  state = {
+    inPlayTeams: inPlayTeams
+  };
+
+  handleInPlayToggleClick = e => {
+    e.preventDefault();
+
+    const newState = { ...this.state };
+
+    if (this.state.inPlayTeams.length) {
+      newState.inPlayTeams = [];
+    } else {
+      newState.inPlayTeams = inPlayTeams;
+    }
+
+    this.setState(newState);
+  };
+
   render() {
     return (
       <div>
-        <section className="hero is-info is-fullheight">
+        <section
+          className={
+            "hero is-fullheight " +
+            (this.state.inPlayTeams.length ? "is-info" : "is-success")
+          }
+        >
           <div className="hero-head">
-            <nav className="navbar">
-              <div className="container">
-                <div className="navbar-brand">
-                  <a className="navbar-item">
-                    <img
-                      src="https://bulma.io/images/bulma-type-white.png"
-                      alt="Logo"
-                    />
-                  </a>
-                  <span
-                    className="navbar-burger burger"
-                    data-target="navbarMenuHeroB"
-                  >
-                    <span />
-                    <span />
-                    <span />
-                  </span>
-                </div>
-                <div id="navbarMenuHeroB" className="navbar-menu">
-                  <div className="navbar-end">
-                    <a className="navbar-item is-active">Home</a>
-                    <a className="navbar-item">Examples</a>
-                    <a className="navbar-item">Documentation</a>
-                    <span className="navbar-item">
-                      <a className="button is-info is-inverted">
-                        <span className="icon">
-                          <i className="fab fa-github" />
-                        </span>
-                        <span>Github</span>
-                      </a>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </nav>
+            <Navbar />
           </div>
 
           <div className="hero-body">
-            <div className="container has-text-centered">
-              <p className="title">Title</p>
-              <p className="subtitle">Subtitle</p>
+            <div className="container wc-dashboard has-text-centered">
+              <div className="columns">
+                <div className="column">
+                <a className="button" onClick={this.handleInPlayToggleClick}>
+                  <span>Toggle InPlay</span>
+                </a>
+                </div>
+              </div>
+
+              {this.renderInPlay()}
+
+              <div className="columns">
+                <div className="column">
+                  <div className="next-match">
+                    Next up <br />
+                    <NextMatch home="Spain" away="Russia" time="time" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
           <div className="hero-foot">
-            <nav className="tabs is-boxed is-fullwidth">
-              <div className="container">
-                <ul>
-                  <li className="is-active">
-                    <a>Overview</a>
-                  </li>
-                  <li>
-                    <a>Modifiers</a>
-                  </li>
-                  <li>
-                    <a>Grid</a>
-                  </li>
-                  <li>
-                    <a>Elements</a>
-                  </li>
-                  <li>
-                    <a>Components</a>
-                  </li>
-                  <li>
-                    <a>Layout</a>
-                  </li>
-                </ul>
-              </div>
-            </nav>
+            <Footer />
           </div>
         </section>
       </div>
     );
+  }
+
+  renderInPlay() {
+    if (this.state.inPlayTeams.length === 0) {
+      return;
+    }
+
+    return this.state.inPlayTeams.map((team) => {
+      const key = team.home + "-" + team.away;
+      return (
+        <InPlay
+          key={key}
+          home={team.home}
+          homeScore={team.homeScore}
+          away={team.away}
+          awayScore={team.awayScore}
+        />
+      );
+    });
   }
 }
 
