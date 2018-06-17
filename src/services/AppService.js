@@ -14,13 +14,19 @@ const AppService = {
     EventService.triggerEvent(EventNames.ON_REFRESH_DATA_REQUEST_IN_PROGRESS);
 
     try {
-      const fixtures = await FixtureService.fetchFixturesTest();
+      const fixtures = await FixtureService.fetchFixtures();
 
       if (hasChanged(Store.fixtures, fixtures)) {
         const matchesInPlay = FixtureService.getMatchesInPlay(fixtures);
 
         if (hasChanged(Store.matchesInPlay, matchesInPlay)) {
-          NotificationService.notify(getLiveNotificationText(matchesInPlay));
+          if (matchesInPlay.length) {
+            NotificationService.notify(getLiveNotificationText(matchesInPlay));
+          } else { // match ended!
+            NotificationService.notify(
+              "Finished \n" + getLiveNotificationText(Store.matchesInPlay)
+            );
+          }
           Store.matchesInPlay = matchesInPlay;
           this.updateRefreshInterval();
         }
@@ -46,7 +52,7 @@ const AppService = {
   },
 
   async init() {
-    NotificationService.notify("Welcome to World Cup 2018!");
+    NotificationService.notify("Welcome to World Cup live 2018!");
     await this.refreshData();
 
     this.refreshIntervalId = setInterval(async () => {
@@ -59,7 +65,7 @@ const AppService = {
       if (this.refreshIntervalInPlayId === null) {
         this.refreshIntervalInPlayId = setInterval(async () => {
           await this.refreshData();
-        }, 60000);
+        }, 60 * 1000);
         console.log("Matches in play, refreshing every minute");
       } else {
         console.log("Matches in play, no change to refresh rate");
@@ -84,6 +90,7 @@ const hasChanged = (prev, next) => {
 
 const getLiveNotificationText = matchesInPlay => {
   let result = "";
+  
   for (const match of matchesInPlay) {
     result += `${match.home} ${match.homeScore} - ${match.away} ${
       match.awayScore

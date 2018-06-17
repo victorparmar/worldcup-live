@@ -14,6 +14,8 @@ import faTimes from "@fortawesome/fontawesome-free-solid/faTimes";
 import faFacebook from "@fortawesome/fontawesome-free-brands/faFacebook";
 import faGithub from "@fortawesome/fontawesome-free-brands/faGithub";
 import faCircleNotch from "@fortawesome/fontawesome-free-solid/faCircleNotch";
+import faTrophy from "@fortawesome/fontawesome-free-solid/faTrophy";
+
 import AppService from "./services/AppService";
 
 fontawesome.library.add(faUser);
@@ -24,6 +26,7 @@ fontawesome.library.add(faAngleDown);
 fontawesome.library.add(faFacebook);
 fontawesome.library.add(faGithub);
 fontawesome.library.add(faCircleNotch);
+fontawesome.library.add(faTrophy);
 
 // import registerServiceWorker from './registerServiceWorker';
 

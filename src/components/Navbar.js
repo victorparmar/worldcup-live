@@ -68,10 +68,12 @@ class Navbar extends React.Component {
         <div className="container">
           <div className="navbar-brand">
             <a className="navbar-item">
-              <img
-                src="https://bulma.io/images/bulma-type-white.png"
-                alt="Logo"
-              />
+              <span className="icon">
+                <i className="fas fa-trophy" />
+              </span>
+              <span>
+                <b>World Cup Live 2018</b>
+              </span>
             </a>
             <span
               className="navbar-burger burger"
@@ -90,14 +92,16 @@ class Navbar extends React.Component {
             }
           >
             <div className="navbar-end">
-              <span className="navbar-item">
-                <a
-                  className="button is-inverted"
-                  onClick={this.handleToggleInPlayClick}
-                >
-                  <span>Toggle InPlay</span>
-                </a>
-              </span>
+              {this.props.showToggleInPlay && (
+                <span className="navbar-item">
+                  <a
+                    className="button is-inverted"
+                    onClick={this.handleToggleInPlayClick}
+                  >
+                    <span>Toggle InPlay</span>
+                  </a>
+                </span>
+              )}
               <span className="navbar-item">
                 <a
                   className={

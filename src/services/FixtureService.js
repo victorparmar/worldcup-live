@@ -1,8 +1,11 @@
 import fetch from "isomorphic-fetch";
 import moment from "moment";
+import Chance from "chance";
 import SampleFixtures from "./sample-fixtures.json";
 
 const key = "982b4410af404169b02efc3cbb0ec791"; // Get your own at https://api.football-data.org/
+
+const chance = new Chance();
 
 const FixtureService = {
   fetchFixtures: () => {
@@ -17,7 +20,16 @@ const FixtureService = {
   },
   fetchFixturesTest: () => {
     console.log("fetchFixturesTest");
-    return Promise.resolve(SampleFixtures);
+
+    const result = JSON.parse(JSON.stringify(SampleFixtures));
+
+    if (chance.bool()) {
+      result.fixtures = result.fixtures.filter(fixture => {
+        return fixture.status !== "IN_PLAY";
+      });
+    }
+
+    return Promise.resolve(result);
   },
   getMatchesInPlay: fixtures => {
     return filterFixtures(fixtures, "IN_PLAY");
@@ -62,7 +74,9 @@ const FixtureService = {
 
 const getSimpleFixture = fixture => {
   return {
-    id: fixture._links.self.href.substr(fixture._links.self.href.lastIndexOf("/") + 1),
+    id: fixture._links.self.href.substr(
+      fixture._links.self.href.lastIndexOf("/") + 1
+    ),
     date: fixture.date,
     home: fixture.homeTeamName,
     homeScore: fixture.result.goalsHomeTeam,

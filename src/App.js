@@ -108,7 +108,7 @@ class App extends Component {
           }
         >
           <div className="hero-head">
-            <Navbar toggleInPlay={this.toggleInPlay} />
+            <Navbar toggleInPlay={this.toggleInPlay} showToggleInPlay={false} />
           </div>
 
           <div className="hero-body">
@@ -147,16 +147,25 @@ class App extends Component {
   }
 
   renderFinished() {
-    return;
+    if (!this.state.matchesFinished.length) {
+      return;
+    }
 
     return (
       <div className="columns match-list">
         <div className="column">
           <div className="match-deets">
             Finished <br />
-            {this.state.matchesFinished.map(match => {
+            <FinishedMatch
+              match={
+                this.state.matchesFinished[
+                  this.state.matchesFinished.length - 1
+                ]
+              }
+            />
+            {/*this.state.matchesFinished.map(match => {
               return <FinishedMatch key={match.id} match={match} />;
-            })}
+            })*/}
           </div>
         </div>
       </div>
