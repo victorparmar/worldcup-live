@@ -1,5 +1,8 @@
 import React from "react";
 
+import EventService, { EventNames } from "../services/EventService";
+import AppService from "../services/AppService";
+
 class Navbar extends React.Component {
   state = {
     isNavbarActive: false,
@@ -18,37 +21,45 @@ class Navbar extends React.Component {
     this.props.toggleInPlay();
   };
 
-  handleRefreshDataClick = e => {
+  handleRefreshDataClick = async e => {
     e.preventDefault();
-    this.refreshData();
+    await AppService.refreshData();
   };
 
-  refreshData = () => {
-    console.log("refreshing");
-
+  handleRefreshDataInProgress = () => {
     this.setState({
       isRefreshingData: true
     });
+  };
 
-    setTimeout(() => {
-      console.log("done");
-      this.setState({
-        isRefreshingData: false
-      });
-    }, 1000);
+  handleRefreshDataDone = () => {
+    this.setState({
+      isRefreshingData: false
+    });
   };
 
   componentDidMount() {
-    this.refreshData();
-    this.intervalId = setInterval(() => {
-      this.refreshData();
-    }, 60000);
+    EventService.listenEvent(
+      EventNames.ON_REFRESH_DATA_REQUEST_IN_PROGRESS,
+      "navbar",
+      this.handleRefreshDataInProgress
+    );
+    EventService.listenEvent(
+      EventNames.ON_REFRESH_DATA_REQUEST_DONE,
+      "navbar",
+      this.handleRefreshDataDone
+    );
   }
 
   componentWillUnmount() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
+    EventService.unlistenEvent(
+      EventNames.ON_REFRESH_DATA_REQUEST_IN_PROGRESS,
+      "navbar"
+    );
+    EventService.unlistenEvent(
+      EventNames.ON_REFRESH_DATA_REQUEST_DONE,
+      "navbar"
+    );
   }
 
   render() {
@@ -115,7 +126,6 @@ class Navbar extends React.Component {
       </nav>
     );
   }
-
 }
 
 export default Navbar;

@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import InPlay from "./components/InPlay";
 
 import NotificationService from "./services/NotificationService";
+import EventService, { EventNames } from "./services/EventService";
 
 const NextMatch = props => {
   return (
@@ -52,6 +53,22 @@ class App extends Component {
     this.setState(newState);
     NotificationService.notify("woah!");
   };
+
+  handleOnDataUpdate = e => {
+    console.log(e);
+  };
+
+  componentDidMount() {
+    EventService.listenEvent(
+      EventNames.ON_DATA_UPDATE,
+      "app",
+      this.handleOnDataUpdate
+    );
+  }
+
+  componentWillUnmount() {
+    EventService.unlistenEvent(EventNames.ON_DATA_UPDATE, "app");
+  }
 
   render() {
     return (

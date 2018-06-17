@@ -14,6 +14,7 @@ import faTimes from "@fortawesome/fontawesome-free-solid/faTimes";
 import faFacebook from "@fortawesome/fontawesome-free-brands/faFacebook";
 import faGithub from "@fortawesome/fontawesome-free-brands/faGithub";
 import faCircleNotch from "@fortawesome/fontawesome-free-solid/faCircleNotch";
+import AppService from "./services/AppService";
 
 fontawesome.library.add(faUser);
 fontawesome.library.add(faCircle);
@@ -28,3 +29,7 @@ fontawesome.library.add(faCircleNotch);
 
 ReactDOM.render(<App />, document.getElementById("root"));
 // registerServiceWorker();
+
+AppService.init().then(() => {
+  console.log("init");
+});
