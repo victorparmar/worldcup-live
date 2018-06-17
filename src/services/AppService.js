@@ -2,23 +2,6 @@ import FixtureService from "./FixtureService";
 import EventService, { EventNames } from "./EventService";
 import NotificationService from "./NotificationService";
 
-const hasChanged = (prev, next) => {
-  if (JSON.stringify(prev) !== JSON.stringify(next)) {
-    return true;
-  }
-  return false;
-};
-
-const getLiveNotificationText = matchesInPlay => {
-  let result = "";
-  for (const match of matchesInPlay) {
-    result += `${match.home} ${match.homeScore} - ${match.away} ${
-      match.awayScore
-    } \n`;
-  }
-  return result;
-};
-
 const Store = {
   fixtures: [],
   matchesInPlay: []
@@ -42,10 +25,15 @@ const AppService = {
           this.updateRefreshInterval();
         }
 
+        const matchesFinished = FixtureService.getMatchesFinished(fixtures);
+        const matchesUpcoming = FixtureService.getMatchesUpcoming(fixtures);
+        const nextMatches = FixtureService.getNextMatches(matchesUpcoming);
+
         EventService.triggerEvent(EventNames.ON_DATA_UPDATE, {
           matchesInPlay,
-          matchesFinished: [],
-          matchesUpcoming: []
+          matchesFinished,
+          matchesUpcoming,
+          nextMatches
         });
 
         Store.fixtures = fixtures;
@@ -84,6 +72,24 @@ const AppService = {
       }
     }
   }
+};
+
+const hasChanged = (prev, next) => {
+  // yes I am a dirty, dirty rat...
+  if (JSON.stringify(prev) !== JSON.stringify(next)) {
+    return true;
+  }
+  return false;
+};
+
+const getLiveNotificationText = matchesInPlay => {
+  let result = "";
+  for (const match of matchesInPlay) {
+    result += `${match.home} ${match.homeScore} - ${match.away} ${
+      match.awayScore
+    } \n`;
+  }
+  return result;
 };
 
 export default AppService;

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import moment from "moment";
 import "./App.css";
 
 import packageJson from "./package.json.lnk";
@@ -7,55 +8,82 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import InPlay from "./components/InPlay";
 
-import NotificationService from "./services/NotificationService";
 import EventService, { EventNames } from "./services/EventService";
 
 const NextMatch = props => {
   return (
     <div>
-      <b>{props.home}</b> vs <b>{props.away}</b> ({props.time})
+      <b>{props.match.home}</b> vs <b>{props.match.away}</b> ({moment(
+        props.match.date
+      )
+        .local()
+        .format("DD MMM, HH:mm")})
     </div>
   );
 };
 
-const inPlayTeams = [
-  {
-    home: "Nigeria",
-    homeScore: "0",
-    away: "Croatia",
-    awayScore: "2"
-  }
-  /*
-  {
-    home: "Spain",
-    homeScore: "2",
-    away: "Germany",
-    awayScore: "3"
-  },
-  */
-];
+const FinishedMatch = props => {
+  return (
+    <div>
+      <b>
+        {props.match.home} <u>{props.match.homeScore}</u>
+      </b>{" "}
+      vs{" "}
+      <b>
+        {props.match.away} <u>{props.match.awayScore}</u>
+      </b>{" "}
+      ({moment(props.match.date)
+        .local()
+        .format("DD MMM, HH:mm")})
+    </div>
+  );
+};
 
 class App extends Component {
   state = {
-    inPlayTeams: inPlayTeams
+    matchesInPlay: [],
+    matchesFinished: [],
+    matchesUpcoming: [],
+    nextMatches: []
   };
 
   // for testing purposes
   toggleInPlay = () => {
     const newState = { ...this.state };
 
-    if (this.state.inPlayTeams.length) {
-      newState.inPlayTeams = [];
+    if (this.state.matchesInPlay.length) {
+      newState.matchesInPlay = [];
     } else {
-      newState.inPlayTeams = inPlayTeams;
+      newState.matchesInPlay = [
+        {
+          id: "xxx",
+          home: "Nigeria",
+          homeScore: "0",
+          away: "Croatia",
+          awayScore: "2"
+        }
+        /*
+        {
+          id: "yyy",
+          home: "Spain",
+          homeScore: "2",
+          away: "Germany",
+          awayScore: "3"
+        },
+        */
+      ];
     }
 
     this.setState(newState);
-    NotificationService.notify("woah!");
   };
 
   handleOnDataUpdate = e => {
-    console.log(e);
+    this.setState({
+      matchesInPlay: e.matchesInPlay,
+      matchesFinished: e.matchesFinished,
+      matchesUpcoming: e.matchesUpcoming,
+      nextMatches: e.nextMatches
+    });
   };
 
   componentDidMount() {
@@ -76,7 +104,7 @@ class App extends Component {
         <section
           className={
             "hero is-fullheight " +
-            (this.state.inPlayTeams.length ? "is-success" : "is-info")
+            (this.state.matchesInPlay.length ? "is-success" : "is-info")
           }
         >
           <div className="hero-head">
@@ -99,19 +127,18 @@ class App extends Component {
   }
 
   renderInPlay() {
-    if (this.state.inPlayTeams.length === 0) {
-      return;
+    if (this.state.matchesInPlay.length === 0) {
+      return this.renderFinished();
     }
 
-    return this.state.inPlayTeams.map(team => {
-      const key = team.home + "-" + team.away;
+    return this.state.matchesInPlay.map(match => {
       return (
-        <div key={key}>
+        <div key={match.id}>
           <InPlay
-            home={team.home}
-            homeScore={team.homeScore}
-            away={team.away}
-            awayScore={team.awayScore}
+            home={match.home}
+            homeScore={match.homeScore}
+            away={match.away}
+            awayScore={match.awayScore}
           />
           <hr />
         </div>
@@ -119,13 +146,32 @@ class App extends Component {
     });
   }
 
+  renderFinished() {
+    return;
+
+    return (
+      <div className="columns match-list">
+        <div className="column">
+          <div className="match-deets">
+            Finished <br />
+            {this.state.matchesFinished.map(match => {
+              return <FinishedMatch key={match.id} match={match} />;
+            })}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   renderNextUp() {
     return (
-      <div className="columns next-up">
+      <div className="columns match-list">
         <div className="column">
-          <div className="next-match">
+          <div className="match-deets">
             Next up <br />
-            <NextMatch home="Spain" away="Russia" time="time" />
+            {this.state.nextMatches.map(match => {
+              return <NextMatch key={match.id} match={match} />;
+            })}
           </div>
         </div>
       </div>
