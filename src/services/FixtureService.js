@@ -9,7 +9,7 @@ const chance = new Chance();
 
 const FixtureService = {
   fetchFixtures: () => {
-    return fetch("http://api.football-data.org/v1/competitions/467/fixtures", {
+    return fetch("https://api.football-data.org/v1/competitions/467/fixtures", {
       method: "GET",
       headers: {
         "X-Auth-Token": key
