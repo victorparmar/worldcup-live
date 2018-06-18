@@ -7,7 +7,7 @@ const chance = new Chance();
 
 const SfgFixtureService = {
   fetchFixtures: () => {
-    return fetch("https://world-cup-json.herokuapp.com/matches/today", {
+    return fetch("https://world-cup-json.herokuapp.com/matches", {
       method: "GET"
     }).then(response => {
       return response.json();
