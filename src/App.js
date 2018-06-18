@@ -123,7 +123,7 @@ class App extends Component {
     return this.state.matchesInPlay.map(match => {
       return (
         <div key={match.id}>
-          <InPlay home={match.home} homeScore={match.homeScore} away={match.away} awayScore={match.awayScore} />
+          <InPlay home={match.home} homeScore={match.homeScore} away={match.away} awayScore={match.awayScore} time={match.time} />
           <hr />
         </div>
       );

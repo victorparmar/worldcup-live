@@ -125,7 +125,7 @@ const getLiveNotificationText = matchesInPlay => {
   let result = "";
 
   for (const match of matchesInPlay) {
-    result += `${match.home} ${match.homeScore} - ${match.away} ${match.awayScore} \n`;
+    result += `${match.time} ${match.home} ${match.homeScore} - ${match.away} ${match.awayScore} \n`;
   }
   return result;
 };

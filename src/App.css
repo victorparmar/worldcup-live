@@ -15,3 +15,15 @@
 .wc-dashboard .match-deets {
   font-size:calc(0.6rem + 1vw);
 }
+
+.wc-dashboard .time-container .time {
+  font-size:calc(0.6rem + 1vw);
+  font-style: italic;
+}
+
+.wc-dashboard .time-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
