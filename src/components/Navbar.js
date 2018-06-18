@@ -4,9 +4,12 @@ import EventService, { EventNames } from "../services/EventService";
 import AppService from "../services/AppService";
 
 class Navbar extends React.Component {
+  intervalId = null;
+
   state = {
     isNavbarActive: false,
-    isRefreshingData: false
+    isRefreshingData: false,
+    timeToNextRefresh: AppService.getCurrentRefreshInterval()
   };
 
   handleNavbarMenuClick = e => {
@@ -34,7 +37,8 @@ class Navbar extends React.Component {
 
   handleRefreshDataDone = () => {
     this.setState({
-      isRefreshingData: false
+      isRefreshingData: false,
+      timeToNextRefresh: AppService.getCurrentRefreshInterval()
     });
   };
 
@@ -45,6 +49,14 @@ class Navbar extends React.Component {
       this.handleRefreshDataInProgress
     );
     EventService.listenEvent(EventNames.ON_REFRESH_DATA_REQUEST_DONE, "navbar", this.handleRefreshDataDone);
+
+    this.intervalId = setInterval(() => {
+      this.setState((prevState, props) => {
+        return {
+          timeToNextRefresh: prevState.timeToNextRefresh - 1
+        };
+      });
+    }, 1000);
   }
 
   componentWillUnmount() {
@@ -85,7 +97,7 @@ class Navbar extends React.Component {
                   className={"button is-inverted " + (this.state.isRefreshingData ? "is-loading" : "")}
                   onClick={this.handleRefreshDataClick}
                 >
-                  <span>Refresh Data</span>
+                  <span>Refresh ({this.state.timeToNextRefresh > 0 ? this.state.timeToNextRefresh : "soon"})</span>
                 </a>
               </span>
               <span className="navbar-item">

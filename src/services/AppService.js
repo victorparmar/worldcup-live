@@ -94,6 +94,13 @@ const AppService = {
 
       console.log("No matches in play, next refresh in " + this.refreshInterval / 1000 + " seconds");
     }
+  },
+
+  getCurrentRefreshInterval() {
+    if (Store.matchesInPlay.length) {
+      return this.refreshIntervalInPlay / 1000;
+    }
+    return this.refreshInterval / 1000;
   }
 
   /*
