@@ -28,7 +28,7 @@ const FinishedMatch = props => {
       <b>
         {props.match.home} <u>{props.match.homeScore}</u>
       </b>{" "}
-      vs{" "}
+      -{" "}
       <b>
         {props.match.away} <u>{props.match.awayScore}</u>
       </b>{" "}
@@ -108,7 +108,7 @@ class App extends Component {
           }
         >
           <div className="hero-head">
-            <Navbar toggleInPlay={this.toggleInPlay} showToggleInPlay={false} />
+            <Navbar toggleInPlay={this.toggleInPlay} env={this.props.env} />
           </div>
 
           <div className="hero-body">

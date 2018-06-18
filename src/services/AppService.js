@@ -9,26 +9,40 @@ const Store = {
 
 const AppService = {
   refreshIntervalInPlayId: null,
+  refreshIntervalInPlay: 60 * 1000,
   refreshIntervalId: null,
+  refreshInterval: 5 * 60 * 1000,
+  env: "prod",
   async refreshData() {
     EventService.triggerEvent(EventNames.ON_REFRESH_DATA_REQUEST_IN_PROGRESS);
 
     try {
-      const fixtures = await FixtureService.fetchFixtures();
+      let fixtures = null;
+
+      if (this.env === "prod") {
+        fixtures = await FixtureService.fetchFixtures();
+      } else {
+        fixtures = await FixtureService.fetchFixturesTest();
+      }
 
       if (hasChanged(Store.fixtures, fixtures)) {
         const matchesInPlay = FixtureService.getMatchesInPlay(fixtures);
 
         if (hasChanged(Store.matchesInPlay, matchesInPlay)) {
+          if (this.env === "dev") {
+            console.log(Store.matchesInPlay, matchesInPlay); // TODO: improve logging
+          }
+
           if (matchesInPlay.length) {
             NotificationService.notify(getLiveNotificationText(matchesInPlay));
-          } else { // match ended!
+          } else {
+            // match ended!
             NotificationService.notify(
               "Finished \n" + getLiveNotificationText(Store.matchesInPlay)
             );
           }
-          Store.matchesInPlay = matchesInPlay;
-          this.updateRefreshInterval();
+
+          Store.matchesInPlay = JSON.parse(JSON.stringify(matchesInPlay));
         }
 
         const matchesFinished = FixtureService.getMatchesFinished(fixtures);
@@ -42,42 +56,66 @@ const AppService = {
           nextMatches
         });
 
-        Store.fixtures = fixtures;
+        Store.fixtures = JSON.parse(JSON.stringify(fixtures));
       }
     } catch (err) {
       console.error(err); // TODO: improve logging
     } finally {
       EventService.triggerEvent(EventNames.ON_REFRESH_DATA_REQUEST_DONE);
+      this.updateRefreshInterval();
     }
   },
 
-  async init() {
+  async init(env) {
+    this.env = env;
+
+    if (this.env !== "prod") {
+      this.refreshIntervalInPlay = 5 * 1000;
+      this.refreshInterval = 10 * 1000;
+    }
+
     NotificationService.notify("Welcome to World Cup live 2018!");
     await this.refreshData();
-
-    this.refreshIntervalId = setInterval(async () => {
-      await this.refreshData();
-    }, 30 * 60 * 1000);
   },
 
   updateRefreshInterval() {
     if (Store.matchesInPlay.length) {
-      if (this.refreshIntervalInPlayId === null) {
-        this.refreshIntervalInPlayId = setInterval(async () => {
-          await this.refreshData();
-        }, 60 * 1000);
-        console.log("Matches in play, refreshing every minute");
-      } else {
-        console.log("Matches in play, no change to refresh rate");
-      }
+      setTimeout(async () => {
+        await this.refreshData();
+      }, this.refreshIntervalInPlay);
+      console.log(
+        "Matches in play, next refresh in " +
+          this.refreshIntervalInPlay / 1000 +
+          " seconds"
+      );
     } else {
-      console.log("No matches in play, clearing live update");
-      if (this.refreshIntervalInPlayId) {
-        clearInterval(this.refreshIntervalInPlayId);
-        this.refreshIntervalInPlayId = null;
-      }
+      setTimeout(async () => {
+        await this.refreshData();
+      }, this.refreshInterval);
+
+      console.log(
+        "No matches in play, next refresh in " +
+          this.refreshInterval / 1000 +
+          " seconds"
+      );
     }
   }
+
+  /*
+  clearRefreshInterval() {
+    if (this.refreshIntervalId) {
+      clearInterval(this.refreshIntervalId);
+      this.refreshIntervalId = null;
+    }
+  },
+
+  clearRefreshIntervalInPlay() {
+    if (this.refreshIntervalInPlayId) {
+      clearInterval(this.refreshIntervalInPlayId);
+      this.refreshIntervalInPlayId = null;
+    }
+  }
+  */
 };
 
 const hasChanged = (prev, next) => {
@@ -90,7 +128,7 @@ const hasChanged = (prev, next) => {
 
 const getLiveNotificationText = matchesInPlay => {
   let result = "";
-  
+
   for (const match of matchesInPlay) {
     result += `${match.home} ${match.homeScore} - ${match.away} ${
       match.awayScore

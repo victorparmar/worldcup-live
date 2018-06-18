@@ -19,7 +19,7 @@ const FixtureService = {
     });
   },
   fetchFixturesTest: () => {
-    console.log("fetchFixturesTest");
+    console.log("fetchFixturesTest", moment().format("HH:mm:ss"));
 
     const result = JSON.parse(JSON.stringify(SampleFixtures));
 
@@ -29,7 +29,11 @@ const FixtureService = {
       });
     }
 
-    return Promise.resolve(result);
+    return new Promise(function(resolve) {
+      setTimeout(function() {
+        resolve(result);
+      }, 1000);
+    });
   },
   getMatchesInPlay: fixtures => {
     return filterFixtures(fixtures, "IN_PLAY");

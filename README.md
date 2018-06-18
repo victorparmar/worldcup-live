@@ -14,6 +14,8 @@ npm run sass:build
 npm start
 ```
 
+Use query param `env=dev` to simulate data response: `http://localhost:3000/?env=dev`
+
 ## Contributing
 
 Feel free to also create issues for features, bugs, etc.

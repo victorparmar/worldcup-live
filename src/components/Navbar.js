@@ -92,7 +92,7 @@ class Navbar extends React.Component {
             }
           >
             <div className="navbar-end">
-              {this.props.showToggleInPlay && (
+              {this.props.env === "test" && (
                 <span className="navbar-item">
                   <a
                     className="button is-inverted"

@@ -30,9 +30,12 @@ fontawesome.library.add(faTrophy);
 
 // import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById("root"));
+const urlParams = new URLSearchParams(window.location.search);
+const env = urlParams.has("env") ? urlParams.get("env") : "prod";
+
+ReactDOM.render(<App env={env} />, document.getElementById("root"));
 // registerServiceWorker();
 
-AppService.init().then(() => {
-  console.log("init");
+AppService.init(env).then(() => {
+  console.log("init " + env);
 });
