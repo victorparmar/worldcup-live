@@ -1,4 +1,4 @@
-import FixtureService from "./FixtureService";
+import SfgFixtureService from "./SfgFixtureService";
 import EventService, { EventNames } from "./EventService";
 import NotificationService from "./NotificationService";
 
@@ -12,6 +12,7 @@ const AppService = {
   refreshIntervalInPlay: 60 * 1000,
   refreshIntervalId: null,
   refreshInterval: 5 * 60 * 1000,
+  refreshTimeoutId: null,
   env: "prod",
   async refreshData() {
     EventService.triggerEvent(EventNames.ON_REFRESH_DATA_REQUEST_IN_PROGRESS);
@@ -20,13 +21,13 @@ const AppService = {
       let fixtures = null;
 
       if (this.env === "prod") {
-        fixtures = await FixtureService.fetchFixtures();
+        fixtures = await SfgFixtureService.fetchFixtures();
       } else {
-        fixtures = await FixtureService.fetchFixturesTest();
+        fixtures = await SfgFixtureService.fetchFixturesTest();
       }
 
       if (hasChanged(Store.fixtures, fixtures)) {
-        const matchesInPlay = FixtureService.getMatchesInPlay(fixtures);
+        const matchesInPlay = SfgFixtureService.getMatchesInPlay(fixtures);
 
         if (hasChanged(Store.matchesInPlay, matchesInPlay)) {
           if (this.env === "dev") {
@@ -43,9 +44,9 @@ const AppService = {
           Store.matchesInPlay = JSON.parse(JSON.stringify(matchesInPlay));
         }
 
-        const matchesFinished = FixtureService.getMatchesFinished(fixtures);
-        const matchesUpcoming = FixtureService.getMatchesUpcoming(fixtures);
-        const nextMatches = FixtureService.getNextMatches(matchesUpcoming);
+        const matchesFinished = SfgFixtureService.getMatchesFinished(fixtures);
+        const matchesUpcoming = SfgFixtureService.getMatchesUpcoming(fixtures);
+        const nextMatches = SfgFixtureService.getNextMatches(matchesUpcoming);
 
         EventService.triggerEvent(EventNames.ON_DATA_UPDATE, {
           matchesInPlay,
@@ -77,13 +78,17 @@ const AppService = {
   },
 
   updateRefreshInterval() {
+    if (this.refreshTimeoutId) {
+      clearTimeout(this.refreshTimeoutId);
+    }
+
     if (Store.matchesInPlay.length) {
-      setTimeout(async () => {
+      this.refreshTimeoutId = setTimeout(async () => {
         await this.refreshData();
       }, this.refreshIntervalInPlay);
       console.log("Matches in play, next refresh in " + this.refreshIntervalInPlay / 1000 + " seconds");
     } else {
-      setTimeout(async () => {
+      this.refreshTimeoutId = setTimeout(async () => {
         await this.refreshData();
       }, this.refreshInterval);
 

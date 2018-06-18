@@ -4,7 +4,9 @@ A soccer world cup dashboard with notifications. Built using React (create-react
 
 Live: [https://victorparmar.github.io/worldcup-live/](https://victorparmar.github.io/worldcup-live/)
 
-Data provided by: [https://api.football-data.org/](https://api.football-data.org/)
+Data provided by: 
+    - [http://worldcup.sfg.io](http://worldcup.sfg.io)
+    - [https://api.football-data.org/](https://api.football-data.org/)
 
 ## Development
 
