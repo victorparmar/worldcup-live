@@ -5,7 +5,7 @@ describe("SfgFixtureService", () => {
   it("should fetch fixtures", async () => {
     try {
       const fixtures = await SfgFixtureService.fetchFixtures();
-      expect(fixtures.count).toEqual(64);
+      expect(fixtures.length).toEqual(64);
     } catch (err) {
       console.error(err); // try not to rely on the network for tests
     }
