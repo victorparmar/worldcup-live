@@ -1,10 +1,10 @@
 
 .wc-dashboard .country {
-  font-size: 6vw;
+  font-size: calc(0.6rem + 3vw);
 }
 
 .wc-dashboard .score {
-  font-size: 12vw;
+  font-size: calc(1rem + 11vw);
   font-weight: bold;
 }
 
@@ -13,5 +13,5 @@
 }
 
 .wc-dashboard .match-deets {
-  font-size: 1.25rem;
+  font-size:calc(0.6rem + 1vw);
 }
