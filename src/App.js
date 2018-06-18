@@ -151,6 +151,10 @@ class App extends Component {
   }
 
   renderNextUp() {
+    if (this.state.nextMatches.length === 0) {
+      return;
+    }
+    
     return (
       <div className="columns match-list">
         <div className="column">
