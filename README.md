@@ -6,8 +6,8 @@ Live: [https://victorparmar.github.io/worldcup-live/](https://victorparmar.githu
 
 Data provided by
 
-    - [http://worldcup.sfg.io](http://worldcup.sfg.io)
-    - [https://api.football-data.org/](https://api.football-data.org/)
+- [http://worldcup.sfg.io](http://worldcup.sfg.io)
+- [https://api.football-data.org/](https://api.football-data.org/)
 
 ## Screenshots
 
