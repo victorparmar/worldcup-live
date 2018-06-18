@@ -13,9 +13,7 @@ import EventService, { EventNames } from "./services/EventService";
 const NextMatch = props => {
   return (
     <div>
-      <b>{props.match.home}</b> vs <b>{props.match.away}</b> ({moment(
-        props.match.date
-      )
+      <b>{props.match.home}</b> vs <b>{props.match.away}</b> ({moment(props.match.date)
         .local()
         .format("DD MMM, HH:mm")})
     </div>
@@ -87,11 +85,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    EventService.listenEvent(
-      EventNames.ON_DATA_UPDATE,
-      "app",
-      this.handleOnDataUpdate
-    );
+    EventService.listenEvent(EventNames.ON_DATA_UPDATE, "app", this.handleOnDataUpdate);
   }
 
   componentWillUnmount() {
@@ -101,12 +95,7 @@ class App extends Component {
   render() {
     return (
       <div ref={elem => (this.appElem = elem)}>
-        <section
-          className={
-            "hero is-fullheight " +
-            (this.state.matchesInPlay.length ? "is-success" : "is-info")
-          }
-        >
+        <section className={"hero is-fullheight " + (this.state.matchesInPlay.length ? "is-success" : "is-info")}>
           <div className="hero-head">
             <Navbar toggleInPlay={this.toggleInPlay} env={this.props.env} />
           </div>
@@ -134,12 +123,7 @@ class App extends Component {
     return this.state.matchesInPlay.map(match => {
       return (
         <div key={match.id}>
-          <InPlay
-            home={match.home}
-            homeScore={match.homeScore}
-            away={match.away}
-            awayScore={match.awayScore}
-          />
+          <InPlay home={match.home} homeScore={match.homeScore} away={match.away} awayScore={match.awayScore} />
           <hr />
         </div>
       );
@@ -156,13 +140,7 @@ class App extends Component {
         <div className="column">
           <div className="match-deets">
             Finished <br />
-            <FinishedMatch
-              match={
-                this.state.matchesFinished[
-                  this.state.matchesFinished.length - 1
-                ]
-              }
-            />
+            <FinishedMatch match={this.state.matchesFinished[this.state.matchesFinished.length - 1]} />
             {/*this.state.matchesFinished.map(match => {
               return <FinishedMatch key={match.id} match={match} />;
             })*/}

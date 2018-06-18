@@ -42,10 +42,7 @@ const FixtureService = {
     return filterFixtures(fixtures, "FINISHED");
   },
   getMatchesUpcoming: fixtures => {
-    return [
-      ...filterFixtures(fixtures, "TIMED"),
-      ...filterFixtures(fixtures, "SCHEDULED")
-    ];
+    return [...filterFixtures(fixtures, "TIMED"), ...filterFixtures(fixtures, "SCHEDULED")];
   },
   getNextMatches: upcomingMatches => {
     const sorted = upcomingMatches.sort((a, b) => {
@@ -78,9 +75,7 @@ const FixtureService = {
 
 const getSimpleFixture = fixture => {
   return {
-    id: fixture._links.self.href.substr(
-      fixture._links.self.href.lastIndexOf("/") + 1
-    ),
+    id: fixture._links.self.href.substr(fixture._links.self.href.lastIndexOf("/") + 1),
     date: fixture.date,
     home: fixture.homeTeamName,
     homeScore: fixture.result.goalsHomeTeam,

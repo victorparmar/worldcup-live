@@ -37,9 +37,7 @@ const AppService = {
             NotificationService.notify(getLiveNotificationText(matchesInPlay));
           } else {
             // match ended!
-            NotificationService.notify(
-              "Finished \n" + getLiveNotificationText(Store.matchesInPlay)
-            );
+            NotificationService.notify("Finished \n" + getLiveNotificationText(Store.matchesInPlay));
           }
 
           Store.matchesInPlay = JSON.parse(JSON.stringify(matchesInPlay));
@@ -83,21 +81,13 @@ const AppService = {
       setTimeout(async () => {
         await this.refreshData();
       }, this.refreshIntervalInPlay);
-      console.log(
-        "Matches in play, next refresh in " +
-          this.refreshIntervalInPlay / 1000 +
-          " seconds"
-      );
+      console.log("Matches in play, next refresh in " + this.refreshIntervalInPlay / 1000 + " seconds");
     } else {
       setTimeout(async () => {
         await this.refreshData();
       }, this.refreshInterval);
 
-      console.log(
-        "No matches in play, next refresh in " +
-          this.refreshInterval / 1000 +
-          " seconds"
-      );
+      console.log("No matches in play, next refresh in " + this.refreshInterval / 1000 + " seconds");
     }
   }
 
@@ -130,9 +120,7 @@ const getLiveNotificationText = matchesInPlay => {
   let result = "";
 
   for (const match of matchesInPlay) {
-    result += `${match.home} ${match.homeScore} - ${match.away} ${
-      match.awayScore
-    } \n`;
+    result += `${match.home} ${match.homeScore} - ${match.away} ${match.awayScore} \n`;
   }
   return result;
 };

@@ -44,22 +44,12 @@ class Navbar extends React.Component {
       "navbar",
       this.handleRefreshDataInProgress
     );
-    EventService.listenEvent(
-      EventNames.ON_REFRESH_DATA_REQUEST_DONE,
-      "navbar",
-      this.handleRefreshDataDone
-    );
+    EventService.listenEvent(EventNames.ON_REFRESH_DATA_REQUEST_DONE, "navbar", this.handleRefreshDataDone);
   }
 
   componentWillUnmount() {
-    EventService.unlistenEvent(
-      EventNames.ON_REFRESH_DATA_REQUEST_IN_PROGRESS,
-      "navbar"
-    );
-    EventService.unlistenEvent(
-      EventNames.ON_REFRESH_DATA_REQUEST_DONE,
-      "navbar"
-    );
+    EventService.unlistenEvent(EventNames.ON_REFRESH_DATA_REQUEST_IN_PROGRESS, "navbar");
+    EventService.unlistenEvent(EventNames.ON_REFRESH_DATA_REQUEST_DONE, "navbar");
   }
 
   render() {
@@ -75,49 +65,31 @@ class Navbar extends React.Component {
                 <b>World Cup Live 2018</b>
               </span>
             </a>
-            <span
-              className="navbar-burger burger"
-              data-target="navbarMenuHeroB"
-              onClick={this.handleNavbarMenuClick}
-            >
+            <span className="navbar-burger burger" data-target="navbarMenuHeroB" onClick={this.handleNavbarMenuClick}>
               <span />
               <span />
               <span />
             </span>
           </div>
-          <div
-            id="navbarMenuHeroB"
-            className={
-              "navbar-menu " + (this.state.isNavbarActive ? "is-active" : "")
-            }
-          >
+          <div id="navbarMenuHeroB" className={"navbar-menu " + (this.state.isNavbarActive ? "is-active" : "")}>
             <div className="navbar-end">
               {this.props.env === "test" && (
                 <span className="navbar-item">
-                  <a
-                    className="button is-inverted"
-                    onClick={this.handleToggleInPlayClick}
-                  >
+                  <a className="button is-inverted" onClick={this.handleToggleInPlayClick}>
                     <span>Toggle InPlay</span>
                   </a>
                 </span>
               )}
               <span className="navbar-item">
                 <a
-                  className={
-                    "button is-inverted " +
-                    (this.state.isRefreshingData ? "is-loading" : "")
-                  }
+                  className={"button is-inverted " + (this.state.isRefreshingData ? "is-loading" : "")}
                   onClick={this.handleRefreshDataClick}
                 >
                   <span>Refresh Data</span>
                 </a>
               </span>
               <span className="navbar-item">
-                <a
-                  className="button is-inverted"
-                  href="https://github.com/victorparmar/worldcup-live"
-                >
+                <a className="button is-inverted" href="https://github.com/victorparmar/worldcup-live">
                   <span className="icon">
                     <i className="fab fa-github" />
                   </span>

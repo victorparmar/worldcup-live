@@ -11,9 +11,9 @@ export const EventNames = {
 
 const EventService = {
   callbacks: {
-    "onDataUpdate": {},
-    "onRefreshDataRequestInProgress": {},
-    "onRefreshDataRequestDone": {},
+    onDataUpdate: {},
+    onRefreshDataRequestInProgress: {},
+    onRefreshDataRequestDone: {}
   },
   /**
    * @param {string} eventName
