@@ -31,13 +31,13 @@ const SfgFixtureService = {
     });
   },
   getMatchesInPlay: fixtures => {
-    return filterFixtures(fixtures, "in progress");
+    return filterFixtures(fixtures, ["in progress", "pending_correction"]);
   },
   getMatchesFinished: fixtures => {
-    return filterFixtures(fixtures, "completed");
+    return filterFixtures(fixtures, ["completed"]);
   },
   getMatchesUpcoming: fixtures => {
-    return filterFixtures(fixtures, "future");
+    return filterFixtures(fixtures, ["future"]);
   },
   getNextMatches: upcomingMatches => {
     const sorted = upcomingMatches.sort((a, b) => {
@@ -80,10 +80,15 @@ const getSimpleFixture = fixture => {
   };
 };
 
-const filterFixtures = (fixtures, status) => {
+const filterFixtures = (fixtures, statuses) => {
   return fixtures
     .filter(fixture => {
-      return fixture.status === status;
+      for (const status of statuses) {
+        if (fixture.status === status) {
+          return true;
+        }  
+      }
+      return false;
     })
     .map(getSimpleFixture);
 };
