@@ -3,7 +3,6 @@
   "pkgFiles": ["package.json", "package-lock.json"],
   "requireCleanWorkingDir": true,
   "src": {
-    "beforeStartCommand": "CI=true npm test",
     "afterReleaseCommand": "npm run deploy"
   },
   "npm": {
