@@ -1,13 +1,13 @@
 {
   "main.css": "/worldcup-live/static/css/main.f172826e.chunk.css",
-  "main.js": "/worldcup-live/static/js/main.40030b07.chunk.js",
-  "main.js.map": "/worldcup-live/static/js/main.40030b07.chunk.js.map",
-  "static/js/1.17a7380f.chunk.js": "/worldcup-live/static/js/1.17a7380f.chunk.js",
-  "static/js/1.17a7380f.chunk.js.map": "/worldcup-live/static/js/1.17a7380f.chunk.js.map",
+  "main.js": "/worldcup-live/static/js/main.a51af8dc.chunk.js",
+  "main.js.map": "/worldcup-live/static/js/main.a51af8dc.chunk.js.map",
+  "static/js/1.d42c41f4.chunk.js": "/worldcup-live/static/js/1.d42c41f4.chunk.js",
+  "static/js/1.d42c41f4.chunk.js.map": "/worldcup-live/static/js/1.d42c41f4.chunk.js.map",
   "runtime~main.js": "/worldcup-live/static/js/runtime~main.d86198c1.js",
   "runtime~main.js.map": "/worldcup-live/static/js/runtime~main.d86198c1.js.map",
   "static/css/main.f172826e.chunk.css.map": "/worldcup-live/static/css/main.f172826e.chunk.css.map",
   "index.html": "/worldcup-live/index.html",
-  "precache-manifest.53f0700b0b1a76bd3b6133186ca91c42.js": "/worldcup-live/precache-manifest.53f0700b0b1a76bd3b6133186ca91c42.js",
+  "precache-manifest.33be4a69233cefde6bcfdd9fefc1fa39.js": "/worldcup-live/precache-manifest.33be4a69233cefde6bcfdd9fefc1fa39.js",
   "service-worker.js": "/worldcup-live/service-worker.js"
 }
