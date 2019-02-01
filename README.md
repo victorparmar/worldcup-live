@@ -2,7 +2,7 @@
 
 A soccer world cup dashboard with notifications. Built using React (create-react-app) with Bulma.css and FontAwesome icons.
 
-Live: [https://victorparmar.github.io/worldcup-live/](https://victorparmar.github.io/worldcup-live/)
+Live: [https://wheresvic.github.io/worldcup-live/](https://wheresvic.github.io/worldcup-live/)
 
 Data provided by
 
@@ -11,9 +11,9 @@ Data provided by
 
 ## Screenshots
 
-![normal](https://raw.githubusercontent.com/victorparmar/worldcup-live/master/public/screenshot-normal.png)
+![normal](https://raw.githubusercontent.com/wheresvic/worldcup-live/master/public/screenshot-normal.png)
 
-![in play](https://raw.githubusercontent.com/victorparmar/worldcup-live/master/public/screenshot-in-play.png)
+![in play](https://raw.githubusercontent.com/wheresvic/worldcup-live/master/public/screenshot-in-play.png)
 
 ## Development
 
