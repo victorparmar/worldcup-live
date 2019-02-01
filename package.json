@@ -1,6 +1,6 @@
 {
   "name": "worldcup-live",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "private": false,
   "homepage": "https://victorparmar.github.io/worldcup-live",
   "dependencies": {
