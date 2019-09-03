@@ -18,6 +18,8 @@ import faTrophy from "@fortawesome/fontawesome-free-solid/faTrophy";
 
 import AppService from "./services/AppService";
 
+import packageJson from "./package.json.lnk";
+
 fontawesome.library.add(faUser);
 fontawesome.library.add(faCircle);
 fontawesome.library.add(faUserCircle);
@@ -38,4 +40,6 @@ ReactDOM.render(<App env={env} />, document.getElementById("root"));
 
 AppService.init(env).then(() => {
   console.log("init " + env);
+  console.log(packageJson.version);
 });
+
