@@ -1,0 +1,19 @@
+{
+  "hooks": {
+    "before:init": null,
+    "before:bump": null,
+    "after:bump": null,
+    "before:release": null,
+    "after:release": "npm run deploy"
+  },
+  "npm": {
+    "publish": false
+  },
+  "github": {
+    "release": true
+  },
+  "gitlab": {
+    "release": false
+  }
+}
+
